@@ -1,2 +1,9 @@
 [build]
-  functions = "netlify/functions"
+  functions = "netlify/functions"  # Define where your serverless functions are located
+  publish = "public"               # Your build output directory (adjust if needed)
+  command = "npm run build"         # Build command if you're using a build process
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
