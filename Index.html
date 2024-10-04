@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HWID Key</title>
+</head>
+<body>
+    <div id="key"></div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const hwid = urlParams.get('token'); // Assuming the ?token=hwid format
+        const source = 'fluxus'; // or delta
+
+        if (hwid) {
+            fetch(`/.netlify/functions/getKey?hwid=${hwid}&source=${source}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('key').innerText = data.key || 'Key not found';
+                })
+                .catch(err => {
+                    console.error('Error:', err);
+                    document.getElementById('key').innerText = 'Error fetching key';
+                });
+        } else {
+            document.getElementById('key').innerText = 'No HWID provided';
+        }
+    </script>
+</body>
+</html>
